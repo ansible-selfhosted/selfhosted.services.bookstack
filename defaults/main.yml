@@ -1,0 +1,4 @@
+---
+# defaults file for services.bookstack
+
+published_port: 8080
