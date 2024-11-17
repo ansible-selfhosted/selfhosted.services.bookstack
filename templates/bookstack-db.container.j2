@@ -1,0 +1,20 @@
+[Container]
+ContainerName=bookstack_db
+Environment=PUID=1000
+Environment=PGID=1000
+Environment=MYSQL_ROOT_PASSWORD=password 
+Environment=TZ={{ bookstack_timezone }} 
+Environment=MYSQL_DATABASE=bookstack
+Environment=MYSQL_USER=bookstack
+Environment=MYSQL_PASSWORD=bookstack
+Environment=TERM=dumb
+Image=docker.io/mariadb:11.2.3-jammy
+Pod=bookstack.pod
+Volume={{ bookstack_db_config_path }}:/config
+Volume={{ bookstack_db_data_path }}:/var/lib/mysql:Z
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=multi-user.target default.target

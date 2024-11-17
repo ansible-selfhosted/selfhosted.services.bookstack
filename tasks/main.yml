@@ -6,20 +6,50 @@
     state: present
   register: user_info
 
+- name: Normalize default paths
+  ansible.builtin.set_fact:
+    bookstack_config_path: "{{ bookstack_config_path | replace('~', user_info.home) }}"
+    bookstack_db_config_path: "{{ bookstack_db_config_path | replace('~', user_info.home) }}"
+    bookstack_db_data_path: "{{ bookstack_db_data_path | replace('~', user_info.home) }}"
+
+- name: Create directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0750"
+    recurse: true
+  loop:
+    - "{{ bookstack_config_path }}"
+    - "{{ bookstack_db_config_path }}"
+    - "{{ bookstack_db_data_path }}"
+
+- name: Generate the app key
+  when: bookstack_app_key == "<auto_generated>"
+
+  block:
+    - name: Generate the base64 key
+      delegate_to: localhost
+      ansible.builtin.shell: set -o pipefail && echo "base64:$( dd if=/dev/urandom bs=1 count=32 status=none | base64)"
+      args:
+        executable: /usr/bin/bash
+      register: base64_key
+      changed_when: false
+    - name: Set the app key
+      ansible.builtin.set_fact:
+        bookstack_app_key: base64:{{ base64_key.stdout }}
 - name: Put container related files on the host
   ansible.builtin.template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
     mode: "0640"
   loop:
-    - {
-      "src": "httpd.container.j2",
-      "dest": "{{ user_info.home }}/.config/containers/systemd/httpd.container",
-    }
+    - { src: bookstack.container.j2, dest: "{{ user_info.home }}/.config/containers/systemd/bookstack.container" }
+    - { src: bookstack-db.container.j2, dest: "{{ user_info.home }}/.config/containers/systemd/bookstack-db.container" }
+    - { src: bookstack.pod.j2, dest: "{{ user_info.home }}/.config/containers/systemd/bookstack.pod" }
 
 - name: Start the container service
   ansible.builtin.systemd:
-    name: httpd
+    name: bookstack-pod
     state: started
     scope: user
     enabled: true

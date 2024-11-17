@@ -4,7 +4,7 @@ driver:
   name: podman
 platforms:
   - name: instance
-    image: quay.io/speakintelnet/pinp-molecule
+    image: quay.io/speakintelnet/pinp-molecule:latest
     privileged: true
     pre_build_image: true
     systemd: true
@@ -14,5 +14,6 @@ provisioner:
     host_vars:
       instance:
         ansible_user: podman
+        bookstack_app_key: base64:BonYAfY/+yn60fTWjnVdVPOFjYdF/psJ+snw6e1GkbI=
 verifier:
   name: ansible

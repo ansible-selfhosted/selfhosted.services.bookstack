@@ -7,6 +7,44 @@
 
 <!-- BEGIN_ANSIBLE_DOCS -->
 
-### The readme content is auto-generated with the `hatch run docs:generate` command.
+# Ansible Role: [bookstack](https://www.bookstackapp.com/docs/)
+
+A role to deploy Bookstack using rootless Podman with systemd.
+
+## Role Requirements
+
+- none
+
+*Refer to services collection for general requirements*
+
+## Role Arguments
+
+|Option|Description|Type|Required|Default|
+|---|---|---|---|---|
+|bookstack_app_key|The application key for Bookstack.<br>Generated if not provided.<br>Can be generated using <code>echo "base64:$( dd if=/dev/urandom bs=1 count=32 status=none &#124; base64)"</code>|str|False|<auto_generated>|
+|bookstack_config_path|The path for the Bookstack config.|str|False|~/.config/bookstack/|
+|bookstack_db_config_path|The path for the Bookstack database config.|str|False|~/.config/bookstack-db/|
+|bookstack_db_data_path|The path for the Bookstack database data.|str|False|~/.local/share/containers/storage/bookstack-db/|
+|bookstack_timezone|The timezone for the bookstack service.|str|False|Etc/UTC|
+|bookstack_web_port|The default port for the web server.|int|False|8080|
+
+
+## Example Playbook
+
+```
+- hosts: all
+  tasks:
+    - name: Importing bookstack role
+      ansible.builtin.import_role:
+        name: selfhosted.services.bookstack
+      vars:
+```
+
+## License
+
+This project is licensed under the [MIT License](LICENSE)
+
+
+⊂(▀¯▀⊂)
 
 <!-- END_ANSIBLE_DOCS -->

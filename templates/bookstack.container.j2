@@ -1,0 +1,27 @@
+[Unit]
+Description=A wiki-like platform for organising and storing information.
+Requires=bookstack-db.service
+After=bookstack-db.service
+
+[Container]
+AutoUpdate=registry
+ContainerName=bookstack
+Environment=PUID=1000
+Environment=PGID=1000
+Environment=TZ={{ bookstack_timezone }}
+Environment=APP_URL=
+Environment=APP_KEY={{ bookstack_app_key }}
+Environment=DB_HOST=127.0.0.1
+Environment=DB_PORT=3306
+Environment=DB_USERNAME=bookstack
+Environment=DB_PASSWORD=bookstack
+Environment=DB_DATABASE=bookstack
+Image=lscr.io/linuxserver/bookstack:latest
+Pod=bookstack.pod
+Volume={{ bookstack_config_path }}:/config
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=multi-user.target default.target
