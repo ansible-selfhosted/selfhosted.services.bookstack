@@ -10,7 +10,7 @@ Environment=MYSQL_PASSWORD=bookstack
 Environment=TERM=dumb
 Image=docker.io/mariadb:11.2.3-jammy
 Pod=bookstack.pod
-Volume={{ bookstack_db_config_path }}:/config
+Volume={{ bookstack_db_config_path }}:/config:Z
 Volume={{ bookstack_db_data_path }}:/var/lib/mysql:Z
 
 [Service]
