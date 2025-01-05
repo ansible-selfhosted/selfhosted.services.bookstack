@@ -10,8 +10,13 @@ Environment=MYSQL_PASSWORD=bookstack
 Environment=TERM=dumb
 Image=docker.io/mariadb:11.2.3-jammy
 Pod=bookstack.pod
-Volume={{ bookstack_db_config_path }}:/config:Z
-Volume={{ bookstack_db_data_path }}:/var/lib/mysql:Z
+Volume={{ bookstack_db_config_path }}:/config{% if bookstack_db_config_label|length > 0 %}:{{ bookstack_db_config_label }}{% endif %}
+
+Volume={{ bookstack_db_data_path }}:/var/lib/mysql{% if bookstack_db_data_label|length > 0 %}:{{ sbookstack_db_data_label }}{% endif %}
+
+{% for bookstack_db_var in bookstack_db_additional_options %}
+{{ bookstack_db_var }}
+{% endfor %}
 
 [Service]
 Restart=always

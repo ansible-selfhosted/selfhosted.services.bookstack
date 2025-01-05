@@ -21,9 +21,14 @@ A role to deploy Bookstack using rootless Podman with systemd.
 
 |Option|Description|Type|Required|Default|
 |---|---|---|---|---|
+|bookstack_additional_options|List of additional key=value for the quadlet container<br>ex: - "Network=custom.network"<br>Can also be used to leave comments by preceding with a '#'|list|False|[]|
 |bookstack_app_key|The application key for Bookstack.<br>Generated if not provided.<br>Can be generated using <code>echo "base64:$( dd if=/dev/urandom bs=1 count=32 status=none &#124; base64)"</code>|str|False|<auto_generated>|
+|bookstack_config_label|The labels for to the bookstack config directory<br>Comma separated values (ex: rw,Z)|str|False||
 |bookstack_config_path|The path for the Bookstack config.|str|False|~/.config/bookstack/|
+|bookstack_db_additional_options|List of additional key=value for the quadlet container<br>ex: - "Network=custom.network"<br>Can also be used to leave comments by preceding with a '#'|list|False|[]|
+|bookstack_db_config_label|The labels for to the bookstack database config directory<br>Comma separated values (ex: rw,Z)|str|False||
 |bookstack_db_config_path|The path for the Bookstack database config.|str|False|~/.config/bookstack-db/|
+|bookstack_db_data_label|The labels for to the bookstack database data directory<br>Comma separated values (ex: rw,Z)|str|False||
 |bookstack_db_data_path|The path for the Bookstack database data.|str|False|~/.local/share/containers/storage/bookstack-db/|
 |bookstack_timezone|The timezone for the bookstack service.|str|False|Etc/UTC|
 |bookstack_web_port|The default port for the web server.|int|False|8080|

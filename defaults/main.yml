@@ -1,7 +1,12 @@
 ---
+bookstack_additional_options: []
 bookstack_app_key: <auto_generated>
+bookstack_config_label: ''
 bookstack_config_path: ~/.config/bookstack/
+bookstack_db_additional_options: []
+bookstack_db_config_label: ''
 bookstack_db_config_path: ~/.config/bookstack-db/
+bookstack_db_data_label: ''
 bookstack_db_data_path: ~/.local/share/containers/storage/bookstack-db/
 bookstack_timezone: Etc/UTC
 bookstack_web_port: 8080

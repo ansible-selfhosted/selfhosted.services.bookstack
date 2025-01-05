@@ -9,6 +9,14 @@ argument_specs:
     author:
       - SpeakinTelnet
     options:
+      bookstack_additional_options:
+        type: list
+        required: false
+        default: []
+        description:
+          - List of additional key=value for the quadlet container
+          - 'ex: - "Network=custom.network"'
+          - Can also be used to leave comments by preceding with a '#'
       bookstack_app_key:
         type: str
         required: false
@@ -17,18 +25,47 @@ argument_specs:
           - The application key for Bookstack.
           - Generated if not provided.
           - Can be generated using <code>echo "base64:$( dd if=/dev/urandom bs=1 count=32 status=none &#124; base64)"</code>
+      bookstack_config_label:
+        type: str
+        required: false
+        default: ""
+        description:
+          - The labels for to the bookstack config directory
+          - "Comma separated values (ex: rw,Z)"
       bookstack_config_path:
         type: str
         required: false
         default: ~/.config/bookstack/
         description:
           - The path for the Bookstack config.
+      bookstack_db_additional_options:
+        type: list
+        required: false
+        default: []
+        description:
+          - List of additional key=value for the quadlet container
+          - 'ex: - "Network=custom.network"'
+          - Can also be used to leave comments by preceding with a '#'
+      bookstack_db_config_label:
+        type: str
+        required: false
+        default: ""
+        description:
+          - The labels for to the bookstack database config directory
+          - "Comma separated values (ex: rw,Z)"
       bookstack_db_config_path:
         type: str
         required: false
         default: ~/.config/bookstack-db/
         description:
           - The path for the Bookstack database config.
+      bookstack_db_data_label:
+        type: str
+        required: false
+        default: ""
+        description:
+          - The labels for to the bookstack database data directory
+          - "Comma separated values (ex: rw,Z)"
       bookstack_db_data_path:
         type: str
         required: false

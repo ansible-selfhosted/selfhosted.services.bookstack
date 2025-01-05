@@ -18,7 +18,11 @@ Environment=DB_PASSWORD=bookstack
 Environment=DB_DATABASE=bookstack
 Image=lscr.io/linuxserver/bookstack:latest
 Pod=bookstack.pod
-Volume={{ bookstack_config_path }}:/config:Z
+Volume={{ bookstack_config_path }}:/config{% if bookstack_config_label|length > 0 %}:{{ bookstack_config_label }}{% endif %}
+
+{% for bookstack_var in bookstack_additional_options %}
+{{ bookstack_var }}
+{% endfor %}
 
 [Service]
 Restart=always
